@@ -1,6 +1,8 @@
 import './edit.css';
 import { useState } from 'react';
 import Input from '../InputFields/Input';
+import { useSelector, useDispatch } from 'react-redux';
+import { update } from '../../redux/userSlice';
 
 const EditPage = ( props ) => {
 
@@ -17,15 +19,26 @@ const EditPage = ( props ) => {
     "https://preview.redd.it/26s9eejm8vz51.png?auto=webp&s=e38d32ee0ffa0666fade2abd62ed59037c119990"
   ];
 
-  const [name, setName] = useState('Nguyen Thanh Phuc');
-  const [age, setAge] = useState(20);
-  const [about, setAbout] = useState("I'm Frontend Developer");
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const [name, setName] = useState(user.name);
+  const [age, setAge] = useState(user.age);
+  const [about, setAbout] = useState(user.about);
   const [theme, setTheme] = useState("#ff9051");
-  const [url, setUrl] = useState("https://preview.redd.it/rrz3hmsxcll71.png?width=640&crop=smart&auto=webp&s=87cc5ed38d8f088ef9fffef7a4c5756b64309d6a");
+  const [url, setUrl] = useState(user.avaUrl);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setEdit(false);
+    const updatedUser = {
+      name: name,
+      age: age,
+      about: about,
+      themeColor: theme,
+      avaUrl: url
+    };
+    dispatch(update(updatedUser))
   }
 
   return (
@@ -35,9 +48,15 @@ const EditPage = ( props ) => {
           <button className="close">Save</button>
           <div className="edit-profile">Edit Profile</div>
           <div className="input-container">
-            <Input label="Display Name" data={name} setData={setName} />
-            <Input label="Age" data={age} setData={setAge} />
-            <Input inputType="textarea" classStyle="input-about" label="About" data={about} setData={setAbout} />
+            <Input label="Display Name" data={user.name} setData={setName} />
+            <Input label="Age" data={user.age} setData={setAge} />
+            <Input 
+              inputType="textarea" 
+              classStyle="input-about" 
+              label="About" 
+              data={user.about} 
+              setData={setAbout} 
+            />
 
             <label htmlFor="image">Avatar</label>
             <div className="input-image-container">
