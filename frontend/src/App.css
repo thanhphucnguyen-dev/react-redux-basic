@@ -151,3 +151,32 @@ header {
   object-fit: cover;
   overflow: hidden;
 }
+
+.loading {
+  color: #3498db; /* màu xanh nhẹ */
+  font-size: 1rem;
+  font-weight: 500;
+  animation: pulse 1.2s infinite;
+  text-align: center;
+  margin: 10px 0;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+.error {
+  color: #ff4c4c; /* đỏ cảnh báo */
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 10px 0;
+}
