@@ -2,7 +2,7 @@ import './edit.css';
 import { useState } from 'react';
 import Input from '../InputFields/Input';
 import { useSelector, useDispatch } from 'react-redux';
-import { update } from '../../redux/userSlice';
+import { updateUser } from '../../redux/apiRequests';
 
 const EditPage = ( props ) => {
 
@@ -38,7 +38,7 @@ const EditPage = ( props ) => {
       themeColor: theme,
       avaUrl: url
     };
-    dispatch(update(updatedUser))
+    updateUser(updatedUser, dispatch);
   }
 
   return (
@@ -60,10 +60,15 @@ const EditPage = ( props ) => {
 
             <label htmlFor="image">Avatar</label>
             <div className="input-image-container">
-              {avaUrl.map((url, index) => {
+              {avaUrl.map((avatarUrl, index) => {
                   return (
                     <>
-                      <img src={url} alt="avatar" className="input-image" key={index} onClick={(e) => setUrl(e.target.src)} />
+                      <img 
+                        key={index} 
+                        src={avatarUrl} 
+                        alt="avatar" 
+                        className={`input-image ${url === avatarUrl ? "selected" : ""}`}
+                        onClick={(e) => setUrl(e.target.src)} />
                     </>
                   )
               })}
